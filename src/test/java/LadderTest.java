@@ -1,4 +1,4 @@
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +13,19 @@ class LadderTest {
     static Ladder ladder;
     static int[][] rows;
 
-    @BeforeAll
-    static void beforeAll() throws NoSuchFieldException, IllegalAccessException {
+//    @BeforeAll
+//    static void beforeAll() throws NoSuchFieldException, IllegalAccessException {
+//        ladder = new Ladder(6, 3);
+//
+//        Field field = Ladder.class.getDeclaredField("rows");
+//        field.setAccessible(true);
+//        rows = (int[][]) field.get(ladder);
+//    }
+    @BeforeEach
+    void beforeEach() throws NoSuchFieldException, IllegalAccessException {
         ladder = new Ladder(6, 3);
 
-        Field field = Ladder.class.getDeclaredField("rows");                                                //private 멤버 접근 방법
+        Field field = Ladder.class.getDeclaredField("rows");                             //private 멤버 접근 방법
         field.setAccessible(true);
         rows = (int[][]) field.get(ladder);
     }
@@ -37,7 +45,7 @@ class LadderTest {
 
     @Test
     @DisplayName("사다리 라인 입력 범위 테스트")
-    public void testInputLine() throws NoSuchMethodException {   //private 메서드 접근 방법
+    public void testInputLine() throws NoSuchMethodException {                                  //private 메서드 접근 방법
         Method method = Ladder.class.getDeclaredMethod("inputLine", int.class, int.class, int.class);
         method.setAccessible(true);
 
