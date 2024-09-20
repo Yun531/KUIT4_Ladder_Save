@@ -34,7 +34,7 @@ public class Node {
     }
 
     public boolean isAlreadySetDirection() {
-        return isNone();
+        return !isNone();
     }
 
     private boolean isRight() {

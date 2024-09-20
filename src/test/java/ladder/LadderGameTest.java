@@ -25,13 +25,13 @@ class LadderGameTest {
         //when
         GreaterThanOne numberOfPerson = GreaterThanOne.from(3);
         LadderCreator ladderCreator = new LadderCreator(GreaterThanOne.from(2), numberOfPerson);
-        LadderRunner ladderRunner = new LadderRunner(ladderCreator.getRows());
+        LadderGame ladderGame = new LadderGame(ladderCreator);
 
         //given
         Position position = Position.from(4);
 
         //then
-        assertThatThrownBy(() -> ladderRunner.run(position))
+        assertThatThrownBy(() -> ladderGame.run(position))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -41,7 +41,7 @@ class LadderGameTest {
         GreaterThanOne numberOfPerson = GreaterThanOne.from(4);
         GreaterThanOne row = GreaterThanOne.from(3);
         LadderCreator ladderCreator = new LadderCreator(row, numberOfPerson);
-        LadderRunner ladderRunner = new LadderRunner(ladderCreator.getRows());
+        LadderGame ladderGame = new LadderGame(ladderCreator);
 
         ladderCreator.drawLine(Position.from(0),Position.from(0));
         ladderCreator.drawLine(Position.from(1),Position.from(1));
@@ -51,18 +51,18 @@ class LadderGameTest {
         Position position = Position.from(0);
 
         //then
-        assertThat(ladderRunner.run(position)).isEqualTo(2);
+        assertThat(ladderGame.run(position)).isEqualTo(2);
 
         //given
         position = Position.from(1);
 
         //then
-        assertThat(ladderRunner.run(position)).isEqualTo(1);
+        assertThat(ladderGame.run(position)).isEqualTo(1);
 
         //given
         position = Position.from(2);
 
         //then
-        assertThat(ladderRunner.run(position)).isEqualTo(0);
+        assertThat(ladderGame.run(position)).isEqualTo(0);
     }
 }
