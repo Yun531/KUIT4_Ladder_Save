@@ -45,7 +45,7 @@ class LadderTest {
             try{
                 method.invoke(ladder, 1, 1, 3);
             }
-            catch (InvocationTargetException e){                    //리플렉션으로 예외를 발생시키면, 해당 예외가 InvocationTargetException으로 감싸져서 전달됨
+            catch (InvocationTargetException e){                    //리플렉션으로 예외를 발생시키면, 해당 예외가 InvocationTargetException으로 감싸져서 전달
                 throw e.getCause();
             }
         })
