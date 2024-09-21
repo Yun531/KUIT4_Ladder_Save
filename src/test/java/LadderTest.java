@@ -13,16 +13,8 @@ class LadderTest {
     static Ladder ladder;
     static int[][] rows;
 
-//    @BeforeAll
-//    static void beforeAll() throws NoSuchFieldException, IllegalAccessException {
-//        ladder = new Ladder(6, 3);
-//
-//        Field field = Ladder.class.getDeclaredField("rows");
-//        field.setAccessible(true);
-//        rows = (int[][]) field.get(ladder);
-//    }
     @BeforeEach
-    void beforeEach() throws NoSuchFieldException, IllegalAccessException {
+    void beforeEach() throws NoSuchFieldException, IllegalAccessException {                    //@BeforeAll에 사용되는 함수는 static void 로 작성
         ladder = new Ladder(6, 3);
 
         Field field = Ladder.class.getDeclaredField("rows");                             //private 멤버 접근 방법
@@ -31,10 +23,9 @@ class LadderTest {
     }
 
     @Test
-    @DisplayName("사다리 생성 테스트")
+    @DisplayName("초기 사다리 생성 테스트")
     void testLadderCreation() {
         assertThat(ladder).isNotNull();
-
 
         for(int i = 0; i < 6; i++){
             for(int k = 0; k < 3; k++){
@@ -71,6 +62,24 @@ class LadderTest {
     }
 
     @Test
+    @DisplayName("사다리 라인 생성 테스트 : 중복 생성")
+    public void testDrawLadder1() throws IllegalAccessException {
+        assertThat(ladder.drawLadder(1,1,2)).isEqualTo(true);
+        assertThat(ladder.drawLadder(1,2,3)).isEqualTo(false);
+        assertThat(ladder.drawLadder(6,2,3)).isEqualTo(true);
+        assertThat(ladder.drawLadder(6,2,3)).isEqualTo(false);
+    }
+
+    @Test
+    @DisplayName("사다리 라인 생성 테스트 : 범위 밖 생성")
+    public void testDrawLadder2() {
+        assertThatThrownBy(() -> ladder.drawLadder(0,2,3)).isInstanceOf(IllegalAccessException.class);
+        assertThatThrownBy(() -> ladder.drawLadder(7,2,3)).isInstanceOf(IllegalAccessException.class);
+        assertThatThrownBy(() -> ladder.drawLadder(0,1,3)).isInstanceOf(IllegalAccessException.class);
+        assertThatThrownBy(() -> ladder.drawLadder(7,1,3)).isInstanceOf(IllegalAccessException.class);
+    }
+
+    @Test
     @DisplayName("사다리 중복 생성 테스트")
     public void testCheckLine() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = Ladder.class.getDeclaredMethod("checkLine", Position.class);
@@ -82,23 +91,40 @@ class LadderTest {
     }
 
     @Test
-    @DisplayName("사다리 게임 테스트")
-    void testRun() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method method = Ladder.class.getDeclaredMethod("checkLine", Position.class);
+    @DisplayName("사다리 게임 시작 지점 유효성 테스트")
+    void testValidateTest() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method method = Ladder.class.getDeclaredMethod("validateStarPoint", int.class);
         method.setAccessible(true);
-        Method methodStart = Ladder.class.getDeclaredMethod("start", int.class);
-        methodStart.setAccessible(true);
 
-        method.invoke(ladder, new Position(0, 0, 1));
-        method.invoke(ladder, new Position(2, 0, 1));
-        method.invoke(ladder, new Position(4, 0, 1));
-        method.invoke(ladder, new Position(1, 1, 2));
-        method.invoke(ladder, new Position(3, 1, 2));
-        method.invoke(ladder, new Position(5, 1, 2));
+        assertThat(method.invoke(ladder, 0)).isEqualTo(false);
+        assertThat(method.invoke(ladder, 1)).isEqualTo(true);
+        assertThat(method.invoke(ladder, 2)).isEqualTo(true);
+        assertThat(method.invoke(ladder, 3)).isEqualTo(true);
+        assertThat(method.invoke(ladder, 4)).isEqualTo(false);
+    }
+    @Test
+    @DisplayName("사다리 게임 종료 지점 테스트")
+    void testFindEndPoint() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException{
+        Method methodFindEndPoint = Ladder.class.getDeclaredMethod("findEndPoint", int.class);
+        methodFindEndPoint.setAccessible(true);
 
-        assertThat(methodStart.invoke(ladder, 1)).isEqualTo(0);
-        assertThat(methodStart.invoke(ladder, 2)).isEqualTo(1);
-        assertThat(methodStart.invoke(ladder, 3)).isEqualTo(2);
+        ladder.drawLadder(1,1,2);
+        ladder.drawLadder(2,2,3);
+        ladder.drawLadder(3,1,2);
+        ladder.drawLadder(4,2,3);
+        ladder.drawLadder(5,1,2);
+        ladder.drawLadder(6,2,3);
+
+        assertThat(methodFindEndPoint.invoke(ladder, 1)).isEqualTo(0);
+        assertThat(methodFindEndPoint.invoke(ladder, 2)).isEqualTo(1);
+        assertThat(methodFindEndPoint.invoke(ladder, 3)).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("사다리 게임 테스트")
+    void testRun(){
+        assertThatThrownBy(() -> ladder.run(0)).isInstanceOf(IllegalAccessException.class);
+        assertThatThrownBy(() -> ladder.run(4)).isInstanceOf(IllegalAccessException.class);
     }
 
 }
