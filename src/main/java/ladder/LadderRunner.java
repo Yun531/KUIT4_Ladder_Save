@@ -9,7 +9,7 @@ public class LadderRunner {
     }
 
     public int run(Position position) {
-        //연결 test
+        //연결 test?
         for (int i = 0; i < rows.length; i++) {
             rows[i].nextPosition(position);
         }
