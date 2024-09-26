@@ -1,6 +1,8 @@
 package ladder;
 
+import ladder.creator.LadderAutoCreator;
 import ladder.creator.LadderCreator;
+import ladder.creator.LadderSelfCreator;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -14,18 +16,36 @@ class LadderGameTest {
         GreaterThanOne numberOfPerson = GreaterThanOne.from(5);
 
         //when
-        LadderCreator ladderCreator = new LadderCreator(numberOfRow, numberOfPerson);
+        LadderAutoCreator ladderAutoCreator = new LadderAutoCreator(numberOfRow, numberOfPerson);
 
         //then
-        assertThat(ladderCreator).isNotNull();
+        assertThat(ladderAutoCreator).isNotNull();
     }
 
     @Test
     void 사다리_사람_예외_처리_확인() {
         //when
+        GreaterThanOne numberOfRow = GreaterThanOne.from(2);
         GreaterThanOne numberOfPerson = GreaterThanOne.from(3);
-        LadderCreator ladderCreator = new LadderCreator(GreaterThanOne.from(2), numberOfPerson);
-        LadderGame ladderGame = new LadderGame(ladderCreator);
+
+        LadderAutoCreator ladderAutoCreator = new LadderAutoCreator(numberOfRow, numberOfPerson);
+        LadderGame ladderGame = new LadderGame(ladderAutoCreator);
+
+        //given
+        Position position = Position.from(3);
+
+        //then
+        assertThatThrownBy(() -> ladderGame.run(position))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+    @Test
+    void 사다리_사람_예외_처리_확인2() {
+        //when
+        GreaterThanOne numberOfRow = GreaterThanOne.from(2);
+        GreaterThanOne numberOfPerson = GreaterThanOne.from(3);
+
+        LadderAutoCreator ladderAutoCreator = new LadderAutoCreator(numberOfRow, numberOfPerson);
+        LadderGame ladderGame = new LadderGame(ladderAutoCreator);
 
         //given
         Position position = Position.from(4);
@@ -40,12 +60,12 @@ class LadderGameTest {
         //when
         GreaterThanOne numberOfPerson = GreaterThanOne.from(4);
         GreaterThanOne row = GreaterThanOne.from(3);
-        LadderCreator ladderCreator = new LadderCreator(row, numberOfPerson);
-        LadderGame ladderGame = new LadderGame(ladderCreator);
+        LadderSelfCreator ladderSelfCreator = new LadderSelfCreator(row, numberOfPerson);
+        LadderGame ladderGame = new LadderGame(ladderSelfCreator);
 
-        ladderCreator.drawLine(Position.from(0),Position.from(0));
-        ladderCreator.drawLine(Position.from(1),Position.from(1));
-        ladderCreator.drawLine(Position.from(2),Position.from(0));
+        ladderSelfCreator.drawLine(Position.from(0),Position.from(0));
+        ladderSelfCreator.drawLine(Position.from(1),Position.from(1));
+        ladderSelfCreator.drawLine(Position.from(2),Position.from(0));
 
 
         //given
