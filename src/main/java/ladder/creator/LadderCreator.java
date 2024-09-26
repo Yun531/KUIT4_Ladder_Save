@@ -19,6 +19,12 @@ public class LadderCreator {
         rows[row.getValue()].drawLine(col);
     }
 
+    public void setRowsString(){
+        for(int i = 0; i < rows.length; i++){
+            rows[i].setRowString();
+        }
+    }
+
     public Row[] getRows() {
         return rows;
     }

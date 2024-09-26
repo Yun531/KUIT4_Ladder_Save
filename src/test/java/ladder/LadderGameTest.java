@@ -47,6 +47,7 @@ class LadderGameTest {
         ladderCreator.drawLine(Position.from(1),Position.from(1));
         ladderCreator.drawLine(Position.from(2),Position.from(0));
 
+
         //given
         Position position = Position.from(0);
 

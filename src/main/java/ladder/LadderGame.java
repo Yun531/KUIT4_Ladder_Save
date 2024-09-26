@@ -7,6 +7,7 @@ public class LadderGame {
     private final LadderCreator ladderCreator;
 
     public LadderGame(LadderCreator ladderCreator) {
+        ladderCreator.setRowsString();                  //각 행 에 해당하는 문자열 생성
         this.ladderCreator = ladderCreator;
     }
 

@@ -154,4 +154,72 @@ class RowTest {
                 .isInstanceOf(IllegalArgumentException.class);
 
     }
+
+    @Test
+    void rowString_문자열_확인(){
+        GreaterThanOne numberOfPerson = GreaterThanOne.from(3);
+        Row row = new Row(numberOfPerson);
+        row.drawLine(Position.from(1));
+        row.setRowString();
+
+        assertThat(row.getRowStringBuilder().toString()).isEqualTo("0 1 -1\n");
+    }
+
+    @Test
+    void rowString_문자열_확인2(){
+        GreaterThanOne numberOfPerson = GreaterThanOne.from(4);
+        Row row = new Row(numberOfPerson);
+        row.drawLine(Position.from(1));
+        row.setRowString();
+
+        assertThat(row.getRowStringBuilder().toString()).isEqualTo("0 1 -1 0\n");
+    }
+
+    @Test
+    void rowString_별_생성_확인(){
+        GreaterThanOne numberOfPerson = GreaterThanOne.from(4);
+        Row row = new Row(numberOfPerson);
+        row.drawLine(Position.from(1));
+        row.setRowString();
+
+        assertThat(row.getRowStringBuilder(Position.from(1)).toString()).isEqualTo("0 1* -1 0\n");
+        assertThat(row.getRowStringBuilder(Position.from(2)).toString()).isEqualTo("0 1 -1* 0\n");
+    }
+
+    @Test
+    void rowString_별_생성_확인2(){
+        GreaterThanOne numberOfPerson = GreaterThanOne.from(4);
+        Row row = new Row(numberOfPerson);
+        row.drawLine(Position.from(0));
+        row.drawLine(Position.from(2));
+        row.setRowString();
+
+        assertThat(row.getRowStringBuilder(Position.from(0)).toString()).isEqualTo("1* -1 1 -1\n");
+    }
+
+
+    @Test
+    void rowString_별_생성_제거_확인(){
+        GreaterThanOne numberOfPerson = GreaterThanOne.from(4);
+        Row row = new Row(numberOfPerson);
+        row.drawLine(Position.from(1));
+        row.setRowString();
+
+        assertThat(row.getRowStringBuilder(Position.from(1)).toString()).isEqualTo("0 1* -1 0\n");
+        assertThat(row.getRowStringBuilder(Position.from(2)).toString()).isEqualTo("0 1 -1* 0\n");
+    }
+
+    @Test
+    void rowString_별_제거_확인2(){
+        GreaterThanOne numberOfPerson = GreaterThanOne.from(4);
+        Row row = new Row(numberOfPerson);
+        row.drawLine(Position.from(0));
+        row.drawLine(Position.from(2));
+        row.setRowString();
+
+        assertThat(row.getRowStringBuilder(Position.from(0)).toString()).isEqualTo("1* -1 1 -1\n");
+        assertThat(row.getRowStringBuilder(Position.from(1)).toString()).isEqualTo("1 -1* 1 -1\n");
+        assertThat(row.getRowStringBuilder(Position.from(2)).toString()).isEqualTo("1 -1 1* -1\n");
+        assertThat(row.getRowStringBuilder(Position.from(3)).toString()).isEqualTo("1 -1 1 -1*\n");
+    }
 }
