@@ -13,7 +13,7 @@ public class LadderGame {
 
     public int run(Position position) {
         LadderRunner ladderRunner = new LadderRunner(ladderCreator.getRows());
-        ladderRunner.run(position);
+        ladderRunner.run(LadderPosition.from(position));
         return position.getValue();
     }
 }

@@ -10,7 +10,7 @@ class LadderPositionTest {
     @Test
     void 좌표_생성_확인(){
         //when
-        LadderPosition ladderPosition = LadderPosition.autoCoordinate(3, 3);
+        LadderPosition ladderPosition = LadderPosition.autoLadderPosition(3, 3);
 
         //then
         assertThat(ladderPosition).isNotNull();
@@ -19,7 +19,7 @@ class LadderPositionTest {
     @Test
     void 자동생성좌표_범위_확인1(){
         //when
-        LadderPosition ladderPosition = LadderPosition.autoCoordinate(3, 3);
+        LadderPosition ladderPosition = LadderPosition.autoLadderPosition(3, 3);
 
         //then
         assertThat(ladderPosition.getRow()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(2);
@@ -29,9 +29,9 @@ class LadderPositionTest {
     @Test
     void 자동생성좌표_범위_확인2(){
         //when
-        LadderPosition ladderPosition1 = LadderPosition.autoCoordinate(3, 5);
-        LadderPosition ladderPosition2 = LadderPosition.autoCoordinate(3, 5);
-        LadderPosition ladderPosition3 = LadderPosition.autoCoordinate(3, 5);
+        LadderPosition ladderPosition1 = LadderPosition.autoLadderPosition(3, 5);
+        LadderPosition ladderPosition2 = LadderPosition.autoLadderPosition(3, 5);
+        LadderPosition ladderPosition3 = LadderPosition.autoLadderPosition(3, 5);
 
         //then
         assertThat(ladderPosition1.getRow()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(2);

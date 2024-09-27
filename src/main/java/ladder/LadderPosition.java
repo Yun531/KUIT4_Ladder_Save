@@ -3,15 +3,19 @@ package ladder;
 import java.util.Random;
 
 public class LadderPosition {
-    private final int row;
-    private final Position col;
+    private  int row;
+    private  final Position col;
 
     private LadderPosition(int col, int row){
         this.row = row;
         this.col = Position.from(col);
     }
+    private LadderPosition(Position position, int row){
+        this.row = row;
+        this.col = position;
+    }
 
-    public static LadderPosition autoCoordinate(int numberOfCol, int numberOfRow){
+    public static LadderPosition autoLadderPosition(int numberOfCol, int numberOfRow){
         Random rand = new Random();
         rand.setSeed(System.currentTimeMillis());
 
@@ -19,6 +23,14 @@ public class LadderPosition {
         int row = rand.nextInt(numberOfRow);
 
         return new LadderPosition(col, row);
+    }
+
+    public static LadderPosition from(Position position){
+        return new LadderPosition(position, -1);
+    }
+
+    public void next() {
+        row++;
     }
 
     public int getRow() {

@@ -23,7 +23,7 @@ public class LadderAutoCreator implements LadderCreator{
         int numberOfLine = calcLineNumber(numberOfRow.getValue(), numberOfCol.getValue());
 
         for(int i = 0; i < numberOfLine; ){
-            if(canDrawLine(LadderPosition.autoCoordinate(numberOfCol.getValue(), numberOfRow.getValue()))){
+            if(canDrawLine(LadderPosition.autoLadderPosition(numberOfCol.getValue(), numberOfRow.getValue()))){
                 i++;            //실제로 Line이 그려진 경우 for문의 i를 증가시킴
             }
         }
