@@ -37,41 +37,54 @@ public class Row {
         nodes[position.getValue()].move(position);
     }
 
-    //특정 사다리 층에서 입력된(현재) 위치 수정 >> '*' 검색해서 삭제 한 후, 입력된 위치 '*'로 입력
-    public StringBuilder getRowStringBuilder(){
-        removeStarInRowString();
+    // '*'를 제거하고, '*' 없는 문자열 반환
+    public StringBuilder getRowStringBuilder() {
+        clearStarInRowString();
 
         return rowStringBuilder;
     }
 
-    //todo 가독성 고려 리펙토링
-    public StringBuilder getRowStringBuilder(Position position){
-        int adjustIndex = 0, count = 0;
+    // '*'를 제거하고, 새 위치에 '*'를 추가하여 문자열 반환
+    public StringBuilder getRowStringBuilder(Position position) {
+        clearStarInRowString();
+        insertStarAtPosition(position);
 
-        removeStarInRowString();
+        return rowStringBuilder;
+    }
 
-        for(int i = 0; i*2 + adjustIndex < rowStringBuilder.length(); i++){
-            if(count > position.getValue()){
+    // 문자열에서 '*'를 제거하는 메서드
+    private void clearStarInRowString() {
+        int starIndex = rowStringBuilder.indexOf("*");
+
+        if (starIndex != -1) {
+            rowStringBuilder.deleteCharAt(starIndex);
+        }
+    }
+
+    // 주어진 위치에 '*'를 삽입하는 메서드
+    private void insertStarAtPosition(Position position) {
+        int offset = calculateOffsetForStar(position);
+
+        rowStringBuilder.insert(position.getValue() * 2 + 1 + offset, "*");
+    }
+
+    // '*'가 삽입될 위치를 계산하는 메서드
+    private int calculateOffsetForStar(Position position) {
+        int offset = 0;
+        int col = 0;
+
+        // '*'가 들어갈 위치에 '-'가 있으면, 그만큼 offset을 증가
+        for (int i = 0; i * 2 + offset < rowStringBuilder.length(); i++) {
+            if (col > position.getValue()) {
                 break;
             }
-            count++;
-            if(rowStringBuilder.charAt(i*2 + adjustIndex) == '-'){
-                adjustIndex++;
+            col++;
+            if (rowStringBuilder.charAt(i * 2 + offset) == '-') {
+                offset++;
             }
         }
-        rowStringBuilder.insert(position.getValue() * 2 + 1 + adjustIndex, "*");
-
-        return rowStringBuilder;
+        return offset;
     }
-
-    //문자열에 * 찍혀 있으면 삭제
-    private void removeStarInRowString(){
-        if(rowStringBuilder.indexOf("*") != -1){
-            rowStringBuilder.deleteCharAt(rowStringBuilder.indexOf("*"));
-        }
-    }
-
-
 
     private void setDirectionBetweenNextPosition(Position position) {
         nodes[position.getValue()].setRightNode();
