@@ -24,7 +24,7 @@ public class Row {
         rowStringBuilder = new StringBuilder();
 
         for (Node node : nodes) {
-            rowStringBuilder.append(node.getNodeValue()).append(" ");
+            node.setNodeString(rowStringBuilder);                           //append(nodos.getValue()) 보다, node에 sb 넘겨줘서 처리
         }
         rowStringBuilder.deleteCharAt(rowStringBuilder.length()-1);
         rowStringBuilder.append("\n");
@@ -43,6 +43,8 @@ public class Row {
 
         return rowStringBuilder;
     }
+
+    //todo 가독성 고려 리펙토링
     public StringBuilder getRowStringBuilder(Position position){
         int adjustIndex = 0, count = 0;
 

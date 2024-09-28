@@ -5,6 +5,8 @@ import ladder.GreaterThanOne;
 import ladder.Position;
 import ladder.Row;
 
+import java.util.HashSet;
+
 public class LadderAutoCreator implements LadderCreator{
 
     private final Row[] rows;
@@ -21,17 +23,16 @@ public class LadderAutoCreator implements LadderCreator{
 
     public void drawLine(Position numberOfRow, Position numberOfCol){
         int numberOfLine = calcLineNumber(numberOfRow.getValue(), numberOfCol.getValue());
+        HashSet<LadderPosition> line = new HashSet<>();
 
-        for(int i = 0; i < numberOfLine; ){
-            if(canDrawLine(LadderPosition.autoLadderPosition(numberOfCol.getValue(), numberOfRow.getValue()))){
-                i++;            //실제로 Line이 그려진 경우 for문의 i를 증가시킴
-            }
+        while(line.size() < numberOfLine){
+            canDrawLine(line, LadderPosition.autoLadderPosition(numberOfCol.getValue(), numberOfRow.getValue()));
         }
     }
 
     public void setRowsString(){
-        for(int i = 0; i < rows.length; i++){
-            rows[i].setRowString();
+        for (Row row : rows) {
+            row.setRowString();
         }
     }
 
@@ -44,10 +45,11 @@ public class LadderAutoCreator implements LadderCreator{
         return (int)Math.floor(numberOfRow*numberOfPerson*0.3);
     }
 
-    //랜덤으로 생성한 좌표에서 Line을 그릴수 있는지 확인
-    private boolean canDrawLine(LadderPosition ladderPosition) {
+    //랜덤으로 생성한 좌표에서 Line을 그림
+    private boolean canDrawLine(HashSet<LadderPosition> line, LadderPosition ladderPosition) {
         try {
             rows[ladderPosition.getRow()].drawLine(ladderPosition.getCol());
+            line.add(ladderPosition);
         } catch (IllegalArgumentException e) {
             return false;
         }

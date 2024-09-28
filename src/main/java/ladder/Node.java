@@ -38,6 +38,11 @@ public class Node {
         return get;
     }
 
+    public void setNodeString(StringBuilder sb){
+        sb.append(getNodeValue()).append(" ");
+    }
+
+
     public void setRightNode() {
         direction = RIGHT;
     }

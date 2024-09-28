@@ -34,12 +34,12 @@ class LadderPositionTest {
         LadderPosition ladderPosition3 = LadderPosition.autoLadderPosition(3, 5);
 
         //then
-        assertThat(ladderPosition1.getRow()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(2);
-        assertThat(ladderPosition1.getCol().getValue()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(4);
-        assertThat(ladderPosition2.getRow()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(2);
-        assertThat(ladderPosition2.getCol().getValue()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(4);
-        assertThat(ladderPosition3.getRow()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(2);
-        assertThat(ladderPosition3.getCol().getValue()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(4);
+        assertThat(ladderPosition1.getRow()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(4);
+        assertThat(ladderPosition1.getCol().getValue()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(2);
+        assertThat(ladderPosition2.getRow()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(4);
+        assertThat(ladderPosition2.getCol().getValue()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(2);
+        assertThat(ladderPosition3.getRow()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(4);
+        assertThat(ladderPosition3.getCol().getValue()).isGreaterThanOrEqualTo(0).isLessThanOrEqualTo(2);
     }
 
 }
